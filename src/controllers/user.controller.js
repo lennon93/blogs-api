@@ -27,7 +27,6 @@ const getAll = async (req, res) => {
       };
       return withoutPassword;  
     });
-    console.log(usersWithoutPassword);
     return res.status(200).json(usersWithoutPassword);
   } catch (error) {
     return res.status(500).json({ message: 'Erro interno', error: error.message });
