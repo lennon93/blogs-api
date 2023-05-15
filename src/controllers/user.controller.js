@@ -18,16 +18,21 @@ const addUser = async (req, res) => {
 const getAll = async (req, res) => {
   try {
     const users = await userService.getAll();
-    const usersWithoutPassword = users.map((user) => {
-      const withoutPassword = {
-        id: user.id,
-        displayName: user.displayName,
-        email: user.email,
-        image: user.image,
-      };
-      return withoutPassword;  
-    });
-    return res.status(200).json(usersWithoutPassword);
+    console.log(users);
+    return res.status(200).json(users);
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro interno', error: error.message });
+  }
+};
+
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await userService.getUserById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User does not exist' });
+    }
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(500).json({ message: 'Erro interno', error: error.message });
   }
@@ -36,4 +41,5 @@ const getAll = async (req, res) => {
 module.exports = {
   addUser,
   getAll,
+  getUserById,
 };
