@@ -1,5 +1,7 @@
 const { postService } = require('../services');
 
+const ERROR_MESSAGE = 'Erro interno';
+
 const addPost = async (req, res) => {
   try {
     const { data } = req.user;
@@ -10,7 +12,7 @@ const addPost = async (req, res) => {
     
     return res.status(201).json(post.dataValues);
   } catch (error) {
-    return res.status(500).json({ message: 'Erro interno', error: error.message });
+    return res.status(500).json({ message: ERROR_MESSAGE, error: error.message });
   }
 };
 
@@ -19,7 +21,7 @@ const getAllPost = async (req, res) => {
     const posts = await postService.getAllPost();
     return res.status(200).json(posts);
   } catch (error) {
-    return res.status(500).json({ message: 'Erro interno', error: error.message });
+    return res.status(500).json({ message: ERROR_MESSAGE, error: error.message });
   }
 };
 
@@ -35,7 +37,7 @@ const getPostById = async (req, res) => {
     }
     return res.status(200).json(postById);
   } catch (error) {
-    return res.status(500).json({ message: 'Erro interno', error: error.message });
+    return res.status(500).json({ message: ERROR_MESSAGE, error: error.message });
   }
 };
 
@@ -47,7 +49,17 @@ const updatePostById = async (req, res) => {
     console.log('TESTE  ', postById);
     return res.status(200).json(postById);
   } catch (error) {
-    return res.status(500).json({ message: 'Erro interno', error: error.message });
+    return res.status(500).json({ message: ERROR_MESSAGE, error: error.message });
+  }
+};
+
+const deletePostById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await postService.deletePostById(id);
+    return res.status(204).json();
+  } catch (error) {
+    return res.status(500).json({ message: ERROR_MESSAGE, error: error.message });
   }
 };
 
@@ -56,4 +68,5 @@ module.exports = {
   getAllPost,
   getPostById,
   updatePostById,
+  deletePostById,
 };

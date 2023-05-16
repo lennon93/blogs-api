@@ -1,4 +1,5 @@
 const { verifyToken } = require('../Auth/tokenFunctions');
+const { postService } = require('../services');
 
 const updateValidation = (req, res, next) => {
   const { title, content } = req.body;
@@ -11,13 +12,15 @@ const updateValidation = (req, res, next) => {
   next();
 };
 
-const idTokenValidation = (req, res, next) => {
+const idTokenValidation = async (req, res, next) => {
   const { authorization: token } = req.headers;
   const { id } = req.params;
+  const post = await postService.getPostById(id);
+  const user = post.dataValues.userId;
   const hasToken = verifyToken(token);
+  console.log('TESTE    ', hasToken);
   const idToken = hasToken.data.id;
-
-  if (Number(id) !== Number(idToken)) {
+  if (Number(user) !== Number(idToken)) {
     return res.status(401).json({
       message: 'Unauthorized user',
     });

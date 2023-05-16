@@ -1,4 +1,5 @@
 const categoryService = require('../services/category.service');
+const postService = require('../services/post.service');
 
 const postValidation = (req, res, next) => {
     const { title, content, categoryIds } = req.body;
@@ -13,7 +14,7 @@ if (!title || !content || !categoryIds) {
 
   const categoryIdValidation = async (req, res, next) => {
     const { categoryIds } = req.body;
-  
+    
   const promises = categoryIds.map((id) => {
      const idValid = categoryService.getCategoryById(id);
     return idValid;
@@ -27,8 +28,20 @@ if (!title || !content || !categoryIds) {
   }
     next();
   };
+
+  const postIdValidation = async (req, res, next) => {
+    const { id } = req.params;
+    const isValid = await postService.getPostById(id);
+  if (!isValid) {
+    return res.status(404).json({
+      message: 'Post does not exist',
+    });
+  }
+    next();
+  };
   
   module.exports = {
     postValidation,
     categoryIdValidation,
+    postIdValidation,
   };
