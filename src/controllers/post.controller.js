@@ -23,7 +23,24 @@ const getAllPost = async (req, res) => {
   }
 };
 
+const getPostById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const postById = await postService.getPostById(id);
+
+    if (!postById) {
+      return res.status(404).json({
+        message: 'Post does not exist',
+      });
+    }
+    return res.status(200).json(postById);
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro interno', error: error.message });
+  }
+};
+
 module.exports = {
   addPost,
   getAllPost,
+  getPostById,
 };
