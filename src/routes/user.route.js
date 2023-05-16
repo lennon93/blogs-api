@@ -7,6 +7,7 @@ const { tokenValidation } = require('../middleware/tokenValidation');
 
 const router = Router();
 
+router.delete('/me', tokenValidation, userController.deleteUser);
 router.get('/:id', tokenValidation, userController.getUserById);
 router.get('/', tokenValidation, userController.getAll);
 router.post( 
