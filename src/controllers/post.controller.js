@@ -39,8 +39,21 @@ const getPostById = async (req, res) => {
   }
 };
 
+const updatePostById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const postById = await postService.updatePostById(title, content, id);
+    console.log('TESTE  ', postById);
+    return res.status(200).json(postById);
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro interno', error: error.message });
+  }
+};
+
 module.exports = {
   addPost,
   getAllPost,
   getPostById,
+  updatePostById,
 };
