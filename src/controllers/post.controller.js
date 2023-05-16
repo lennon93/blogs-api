@@ -14,6 +14,16 @@ const addPost = async (req, res) => {
   }
 };
 
+const getAllPost = async (req, res) => {
+  try {
+    const posts = await postService.getAllPost();
+    return res.status(200).json(posts);
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro interno', error: error.message });
+  }
+};
+
 module.exports = {
   addPost,
+  getAllPost,
 };

@@ -24,15 +24,13 @@ module.exports = {
         model: 'users',
         key: 'id',
       },
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     },
     published: {
-      allowNull: false,
       type: Sequelize.DATE,        
     },
     updated: {
-      allowNull: false,
       type: Sequelize.DATE,        
     },  
   });

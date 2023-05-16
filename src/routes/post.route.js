@@ -6,5 +6,6 @@ const { postValidation, categoryIdValidation } = require('../middleware/postVali
 const router = Router();
 
 router.post('/', tokenValidation, postValidation, categoryIdValidation, postController.addPost);
+router.get('/', tokenValidation, postController.getAllPost);
 
 module.exports = router;
