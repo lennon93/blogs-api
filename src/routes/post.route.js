@@ -8,6 +8,7 @@ const { updateValidation, idTokenValidation } = require('../middleware/updateBlo
 
 const router = Router();
 
+router.get('/search', tokenValidation, postController.getPostByQuery);
 router.post('/', tokenValidation, postValidation, categoryIdValidation, postController.addPost);
 router.get('/', tokenValidation, postController.getAllPost);
 router.get('/:id', tokenValidation, postController.getPostById);

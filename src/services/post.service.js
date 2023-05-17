@@ -43,10 +43,20 @@ const deletePostById = async (id) => {
   return deletePost;
 };
 
+const getPostByQuery = async (q) => {
+  const data = await getAllPost();
+  const dataValues = data.map((value) => value.dataValues);
+  const searchQuery = dataValues
+    .filter((post) => post.title.toUpperCase().includes(q.toUpperCase())
+     || post.content.toUpperCase().includes(q.toUpperCase()));
+  return searchQuery;
+};
+
 module.exports = {
   addPost,
   getAllPost,
   getPostById,
   updatePostById,
   deletePostById,
+  getPostByQuery,
 };
